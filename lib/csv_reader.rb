@@ -18,9 +18,19 @@ class CSVReader
     hash = {}
     @headers.each_with_index do |header, index|
       value = values[i].strip.gsub('"', '')
-      h[header] = value unless value.empty?
+      hash[header] = value unless value.empty?
     end
-    h
+    hash
+  end
+
+  def read
+    file = File.new(@filename, 'r')
+    self.headers = file.readline
+    while(!file.eof? && next_line = file.readline)
+      values - next_line.split(',')
+      hash = create_hash(values)
+      yield(hash)
+    end
   end
 
 end
