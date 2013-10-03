@@ -65,10 +65,10 @@ def largest_pop
 
     print "Enter a zipcode: "
     zipcode = gets.strip.to_i
-    zipcodes = @areas.select { |a| a.zipcode == zip }
+    zips = @areas.select { |a| a.zipcode == zip }
     unless zips.empty?
       print ""
-      zipcodes.each { |z| print z}
+      zips.each { |z| print z}
     else
       print "Zipcode not found!"
     end
