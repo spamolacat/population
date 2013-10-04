@@ -4,6 +4,7 @@ class Analytics
 
   def initialize(areas)
     @areas = areas
+    set_options
   end 
 
   def set_options
@@ -17,7 +18,7 @@ class Analytics
   end
 
   def run(num)
-    option = @options.select {|o| o[:menu_id] == num }.first
+    opt = @options.select {|o| o[:menu_id] == num }.first
     if opt.nil?
       print "Invalid Choice!"
     elsif opt[:method] != :exit
@@ -29,17 +30,18 @@ class Analytics
   end
 
   def how_many
-    "The number of areas is: #{@areas.length}"
+    puts "The number of areas is: #{@areas.length}"
   end
 
   def smallest_pop
     
-    sorted = @areas.sort do |x,y|
+    sorted = @areas.sort do |x, y|
+      #puts x
       x.estimated_population <=> y.estimated_population
     end
     
     smallest = sorted.drop_while { |i| i.estimated_population == 0 }.first
-    print "#{smallest.city}, #{smallest.state} has the smallest population of #{smallest.estimated_population}"
+    puts "#{smallest.city}, #{smallest.state} has the smallest population of #{smallest.estimated_population}"
 
   end
 
@@ -48,29 +50,29 @@ def largest_pop
     sorted = @areas.sort do |x,y|
       x.estimated_population <=> y.estimated_population
     end
-    
+    #puts sorted.reverse.drop_while { |i| i.estimated_population == 0 }
     largest = sorted.reverse.drop_while { |i| i.estimated_population == 0 }.first
-    print "#{largest.city}, #{largest.state} has the smallest population of #{largest.estimated_population}"
+    print "#{largest.city}, #{largest.state} has the largest population of #{largest.estimated_population}"
 
   end
 
   def california_zips
   
     count = @areas.count { |a| a.state == "CA"} 
-    print "There are #{c} zip codes in California"   
+    print "There are #{count} zip codes in California"   
 
   end
 
   def zip_info
 
     print "Enter a zipcode: "
-    zipcode = gets.strip.to_i
+    zip = gets.strip.to_i
     zips = @areas.select { |a| a.zipcode == zip }
     unless zips.empty?
-      print ""
-      zips.each { |z| print z}
+      print " "
+      zips.each { |z| puts z}
     else
-      print "Zipcode not found!"
+      puts "Zipcode not found!"
     end
   end
 

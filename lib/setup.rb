@@ -4,9 +4,9 @@ require_relative 'area'
 class Setup
   attr_accessor :areas
   def initialize
-    csv_reader = CSVReader.new("./free-zipcode-database")
+    csv = CSVReader.new("./free-zipcode-database.csv")
     @areas = []
-    csv_reader.read do |item|
+    csv.read do |item|
       @areas << Area.new(item)
     end
     self
